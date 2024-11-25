@@ -24,6 +24,7 @@
   import Note from './Note.vue';
   import AddNoteButton from './AddNoteButton.vue';
   import { ref } from 'vue';
+  import axios from 'axios';
 
   const notes = ref([
   ]);
@@ -31,6 +32,9 @@
     if (!note.content || !note.title) return;
     notes.value.push(note);
   }
+  axios.get('http://127.0.0.1:8000/notes/')
+  .then(res=>{
+    notes.value = res.data;})
   const deleteNote = (note) => {
     notes.value = notes.value.filter((n) => n !== note);
   }
