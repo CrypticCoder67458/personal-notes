@@ -40,11 +40,9 @@
                     text="cancel "
                     @click="isActive.value = false"
                     ></v-btn>
-                </v-card-actions>
-                
+                </v-card-actions>   
             </v-form>
 
-           
         </v-card>
     </template>
 </v-dialog>

@@ -52,7 +52,8 @@
 </template>  
 
 <script setup>  
-import { ref,defineEmits } from 'vue';  
+import { ref,defineEmits } from 'vue';
+import axios from 'axios';  
 
 
 const rules=[
@@ -63,9 +64,22 @@ const props = defineProps(['note']);
 const emit = defineEmits(['deleteNote']);
 const shouldEdit = ref(false);  
  
-const saveNote = () => {  
+const saveNote = () => {
   shouldEdit.value = false;  
-};  
+  axios.put(`http://127.0.0.1:8000/notes/${props.note.id}/`, props.note)
+    .then(res => {
+      // Update the note in your local state/props
+      props.note = res.data;
+      console.log('Note updated successfully:', res.data);
+      // Optionally, update your UI here
+    })
+    .catch(err => {
+      console.error('Error updating note:', err);
+      // Optionally, display an error message to the user
+      alert('Failed to update the note. Please try again.');
+    });
+};
+
 
 
 const deleteNote = () => {  
