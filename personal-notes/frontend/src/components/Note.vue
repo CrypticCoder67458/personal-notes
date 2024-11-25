@@ -63,6 +63,12 @@ const props = defineProps(['note']);
 const emit = defineEmits(['deleteNote']);
 const shouldEdit = ref(false);  
  
+onMounted(() => {
+  axios.get(`http://127.0.0.1:8000/api/notes/`)
+        .then(response => {
+         console.log(response.data);
+})
+})
 const saveNote = () => {  
   shouldEdit.value = false;  
 };  
