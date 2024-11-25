@@ -30,11 +30,18 @@
   ]);
   const addNote = (note) => {
     if (!note.content || !note.title) return;
-    notes.value.push(note);
+    axios.post('http://127.0.0.1:8000/notes/', note).then(res => {
+      notes.value.push(res.data);
+    }).catch(err => {
+      console.log(err);
+    })
   }
   axios.get('http://127.0.0.1:8000/notes/')
   .then(res=>{
     notes.value = res.data;})
+    .catch(err=>{
+      console.log(err);
+    })
   const deleteNote = (note) => {
     notes.value = notes.value.filter((n) => n !== note);
   }
