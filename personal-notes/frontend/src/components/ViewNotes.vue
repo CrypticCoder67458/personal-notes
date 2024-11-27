@@ -1,5 +1,5 @@
 <template>
-    <v-container class="ps-16 mb-15 d-flex justify-center flex-column"
+    <v-container class="ps-16 my-10 d-flex justify-center flex-column"
    >
       <h2>View Notes:</h2>
       <v-row class="flex-nowrap">
