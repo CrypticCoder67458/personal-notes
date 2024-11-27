@@ -1,19 +1,20 @@
 <template>  
   <v-dialog max-width="600">  
     <template v-slot:activator="{ props: activatorProps }">  
-      <v-card   
-        v-if="note"   
-        class="w-100"  
-        v-bind="activatorProps">  
-        <div class="d-flex justify-space-between align-center">  
-          <v-card-title>{{ note.title }}</v-card-title>  
-          <v-card-subtitle>{{ note.date }}</v-card-subtitle>  
-        </div>  
-        <v-card-text>{{ note.content }}</v-card-text>  
-      </v-card>  
+        <v-card   
+          v-if="note"   
+          class="w-100"  
+          v-bind="activatorProps">  
+          <div class="d-flex justify-space-between align-center">  
+            <v-card-title>{{ note.title }}</v-card-title>  
+            <v-card-subtitle>{{ note.date }}</v-card-subtitle>  
+          </div>  
+          <v-card-text>{{ note.content }}</v-card-text>  
+        </v-card>  
+     
     </template>  
 
-    <template v-slot:default="{ isActive }">  
+    <template v-slot:default="{ isActive }">
       <v-card>  
         <v-card-title>{{ note.title }}</v-card-title>  
         
@@ -46,7 +47,7 @@
             @click="deleteNote"  
           ></v-btn>  
         </v-card-actions>  
-      </v-card>  
+      </v-card>
     </template>  
   </v-dialog>  
 </template>  
@@ -64,26 +65,36 @@ const props = defineProps(['note']);
 const emit = defineEmits(['deleteNote']);
 const shouldEdit = ref(false);  
  
-const saveNote = () => {
+const saveNote = () => {  
+  console.log("Note ID being updated:", props.note.id);
   shouldEdit.value = false;  
-  axios.put(`http://127.0.0.1:8000/notes/${props.note.id}/`, props.note)
-    .then(res => {
-      // Update the note in your local state/props
-      props.note = res.data;
-      console.log('Note updated successfully:', res.data);
-      // Optionally, update your UI here
-    })
-    .catch(err => {
-      console.error('Error updating note:', err);
-      // Optionally, display an error message to the user
-      alert('Failed to update the note. Please try again.');
-    });
-};
-
+  axios.put(`http://127.0.0.1:8000/notes/${props.note.id}/`, {   
+    title: props.note.title,  
+    content: props.note.content,  
+  })  
+  .then(res => {  
+    emit('updateNote', res.data); 
+    console.log('Note updated successfully:', res.data);  
+  })  
+  .catch(err => {  
+    console.error('Error updating note:', err);  
+    alert('Failed to update the note. Please try again.');  
+  });  
+};  
 
 
 const deleteNote = () => {  
-  emit('deleteNote', props.note);
-  isActive.value = false; 
-};  
+ 
+    axios.delete(`http://127.0.0.1:8000/notes/${props.note.id}/`)  
+    .then(() => {  
+      emit('deleteNote', props.note); 
+      console.log('Note deleted successfully');  
+    })  
+    .catch(err => {  
+      console.error('Error deleting note:', err);  
+      alert('Failed to delete the note. Please try again.');  
+    });  
+  }  
+
+
 </script>

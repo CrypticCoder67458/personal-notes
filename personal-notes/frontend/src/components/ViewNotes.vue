@@ -35,12 +35,15 @@
       console.log(err);
     })
   }
-  axios.get('http://127.0.0.1:8000/notes/')
-  .then(res=>{
-    notes.value = res.data;})
-    .catch(err=>{
-      console.log(err);
-    })
+  onMounted(() => {
+    axios.get('http://127.0.0.1:8000/notes/')
+    .then(res=>{
+      notes.value = res.data;})
+      .catch(err=>{
+        console.log(err);
+      })
+  })
+  
   const deleteNote = (note) => {
     notes.value = notes.value.filter((n) => n !== note);
   }

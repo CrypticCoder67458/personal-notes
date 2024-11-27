@@ -26,6 +26,7 @@ def note_detail(request, id):
             return Response(serializer.data)
         except Note.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        
     if request.method == 'PUT':
         try:
             note = Note.objects.get(pk=id)
