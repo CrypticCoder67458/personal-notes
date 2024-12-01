@@ -29,7 +29,8 @@
   const notes = ref([]);
   const addNote = (note) => {
     if (!note.content || !note.title) return;
-    axios.post('http://127.0.0.1:8000/notes/', note).then(res => {
+    axios.post('http://127.0.0.1:8000/notes/', note)
+    .then(res => {
       notes.value.push(res.data);
     }).catch(err => {
       console.log(err);
