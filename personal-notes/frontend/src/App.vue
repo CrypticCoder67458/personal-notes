@@ -19,5 +19,7 @@
   import VerticalNavbar from './components/VerticalNavbar.vue';
   import ViewNotes from './components/ViewNotes.vue';
   import StartingPage from './pages/StartingPage.vue';
+  import LoginPage from './pages/LoginPage.vue';
+  import RegisterPage from './pages/RegisterPage.vue';
 </script>
 

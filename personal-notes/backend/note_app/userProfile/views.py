@@ -1,8 +1,7 @@
-from django.contrib.auth import authenticate, login as auth_login  
+from django.contrib.auth import authenticate, login as auth_login ,logout as auth_logout
 from rest_framework import status  
 from rest_framework.decorators import api_view  
 from rest_framework.response import Response  
-from django.contrib.auth import logout as auth_logout  
 from .models import Profile  
 from .serializers import ProfileSerializer, UserRegisterSerializer  
 
@@ -11,7 +10,6 @@ def login(request):
     if request.method == 'POST':  
         username = request.data.get('username')  
         password = request.data.get('password')  
-
         user = authenticate(request, username=username, password=password)  
 
         if user is not None:  
@@ -27,8 +25,8 @@ def register(request):
     if request.method == 'POST':  
         serializer = UserRegisterSerializer(data=request.data)  
         if serializer.is_valid():  
-            user = serializer.save()  # Save the new user  
-            Profile.objects.create(user=user)  # Create a profile for the user  
+            user = serializer.save() 
+            Profile.objects.create(user=user)  
             
             return Response({  
                 'id': user.id,  
@@ -40,5 +38,5 @@ def register(request):
 @api_view(['POST'])  
 def logout(request):  
     if request.method == 'POST':  
-        auth_logout(request)  # Log out the user  
+        auth_logout(request)  
         return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)  

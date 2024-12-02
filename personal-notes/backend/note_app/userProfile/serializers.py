@@ -5,13 +5,11 @@ from django.contrib.auth import password_validation
 from django.utils.translation import gettext_lazy as _  
 
 class UserSerializer(serializers.ModelSerializer):  
-    # We do not include the password in the output  
     class Meta:  
         model = User  
         fields = ['id', 'username', 'email', 'first_name', 'last_name']  
 
     def create(self, validated_data):  
-        # Create a user and hash the password  
         user = User(  
             username=validated_data['username'],  
             email=validated_data['email'],  

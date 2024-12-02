@@ -23,7 +23,7 @@
   <script setup>
   import Note from './Note.vue';
   import AddNoteButton from './AddNoteButton.vue';
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import axios from 'axios';
 
   const notes = ref([]);
@@ -44,6 +44,8 @@
         console.log(err);
       })
   })
+    
+  
   
   const deleteNote = (note) => {
     notes.value = notes.value.filter((n) => n !== note);
